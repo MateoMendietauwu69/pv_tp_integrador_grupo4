@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AdminContext } from "../../context/AdminContext";
 
-function RutaProtegida ({Children}) {
+const RutaProtegida = ({children}) => {
     const {admin} = useContext(AdminContext);
     if(!admin){
-        return <Navigate to="/" />
+        return <Navigate to="/login" replace />
     }
     return children;
 }

@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-export default function Nav () {
+const Nav = () => {
     return (
         <nav>
             <ul>
@@ -11,9 +11,11 @@ export default function Nav () {
                     <NavLink to="/clientes" >Clientes</NavLink>
                 </li>
                 <li>
-                    <NavLink to="/perfil" >Usuarios</NavLink>
+                    <NavLink to="/detalles" >Detalles</NavLink>
                 </li>
             </ul>
         </nav>
     );
 }
+
+export default Nav;
