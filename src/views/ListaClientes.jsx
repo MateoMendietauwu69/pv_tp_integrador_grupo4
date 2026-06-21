@@ -1,6 +1,10 @@
+import FormularioCliente from "../components/common/FormularioCliente";
 const Clientes = () => {
     return (
-        <h1>Ahora estas en Clientes</h1>
+        <div>
+            <h1>Ahora estas en Clientes</h1>
+            <FormularioCliente />
+        </div>
     );
 }
 
