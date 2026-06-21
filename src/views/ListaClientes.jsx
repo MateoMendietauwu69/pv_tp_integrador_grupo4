@@ -1,4 +1,4 @@
-function Clientes () {
+const Clientes = () => {
     return (
         <h1>Ahora estas en Clientes</h1>
     );

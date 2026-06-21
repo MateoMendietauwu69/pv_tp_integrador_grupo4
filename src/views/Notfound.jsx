@@ -1,6 +1,6 @@
 import { Container, Typography } from "@mui/material";
 
-function Notfound () {
+const Notfound = () => {
     return (
         <Container>
             <Typography variant='h3' >Error</Typography>
