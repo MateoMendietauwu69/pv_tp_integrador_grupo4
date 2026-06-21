@@ -1,6 +1,8 @@
+import '../css/DetalleCliente.css'
+
 const Detalles = () => {
     return (
-        <h1>Aquí estan los perfiles de usuario</h1>
+        <h1 id='detalles'>Aquí estan los perfiles de usuario</h1>
     );
 }
 

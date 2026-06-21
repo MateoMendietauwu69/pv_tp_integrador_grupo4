@@ -1,6 +1,8 @@
+import '../css/Dashboard.css'
+
 const Dashboard = () => {
     return (
-        <h1>Bienvenido al dashboard</h1>
+        <h1 id='titulo'>Bienvenido al dashboard</h1>
     );
 }
 

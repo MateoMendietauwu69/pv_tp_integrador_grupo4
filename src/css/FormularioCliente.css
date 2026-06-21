@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Asimovian&family=Bangers&display=swap");
+
+.MuiPaper-root {
+  background-color: #FEB9D9 !important ;
+  padding: 25px 30px !important;
+  border-radius: 20px !important; 
+  box-shadow: 0 4px 20px rgb(237, 129, 241) !important;
+  max-width: 700px !important;
+  margin: 30px auto !important;    
+}
+
+.MuiPaper-root h5, 
+.MuiTypography-h5 {
+  font-family: 'Asimovian', sans-serif !important;
+  color: #1b1b1b !important;
+  text-transform: uppercase !important;
+  text-align: center !important;
+}
+
+.MuiTextField-root .MuiInputBase-root {
+  background-color: #FBD6E8 !important;
+  border-radius: 20px !important;
+  font-family: 'Asimovian', sans-serif !important;
+  color: #1b1b1b !important;
+}
+
+.MuiInputBase-root:hover{
+    background-color: #f89fca !important;
+}
+
+.MuiInputBase-root.Mui-focused{
+    background-color: #fb7ebb !important;
+}
+
+.MuiTextField-root input {
+    color: #1b1b1b !important;
+  font-family: system-ui, sans-serif !important;
+}
+
+.MuiTextField-root .MuiInputLabel-root {
+  color: #1b1b1b !important;
+  font-family: 'Asimovian', sans-serif !important;
+}
+
+.MuiTextField-root .MuiInputLabel-root.Mui-focused {
+  color: #D00066 !important;
+}
+
+.MuiTextField-root .MuiOutlinedInput-root fieldset {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.MuiTextField-root .MuiOutlinedInput-root:hover fieldset {
+  border-color: #FF007F !important;
+}
+
+.MuiTextField-root .MuiOutlinedInput-root.Mui-focused fieldset {
+  border-color: #D00066 !important;
+  border-width: 2px !important;
+}
+
+.MuiPaper-root .MuiButton-contained {
+  background-color: #FA0577 !important;
+  color: white !important;
+  font-family: 'Asimovian', sans-serif !important;
+  border-radius: 30px !important;
+  padding: 12px 0 !important;
+  margin-top: 15px !important;
+  width: 100% !important;
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px rgba(208, 0, 102, 0.2) !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.MuiPaper-root .MuiButton-contained:hover {
+  background-color: #f565a8 !important;
+   transform: scale(1.05);
+}

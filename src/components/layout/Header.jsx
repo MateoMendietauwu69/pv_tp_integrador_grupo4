@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { AdminContext } from "../../context/AdminContext";
+import '../../css/Header.css'
 
 const Header = () => {
 
@@ -16,7 +17,7 @@ const Header = () => {
         <header>
             <p>{admin.nombre}</p>
             <p>{admin.sector}</p>
-            <Button onClick={cerrarsesion} >Cerrar Sesión</Button>
+            <Button id="btncerrar" onClick={cerrarsesion} >Cerrar Sesión</Button>
         </header>
     );
 }

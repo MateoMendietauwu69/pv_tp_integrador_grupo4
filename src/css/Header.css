@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Asimovian&family=Bangers&display=swap");
+
+header {
+  position: fixed;
+  top: 60px;
+  right: calc(50% - 750px + 60px); 
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#btncerrar {
+    box-shadow: 0 0 0 4px #1b1b1b, 0 0 0 8px #FA0D05;
+    border-radius: 30px;
+    font-family: 'Asimovian', sans-serif;
+    color:white;
+    margin-left: 30px;
+}
+
+#btncerrar:hover {
+    box-shadow: 0 0 0 4px #1b1b1b, 0 0 0 8px #FA0D05, 0 0 35px #FA0D05;
+    transform: scale(1.1);
+}
