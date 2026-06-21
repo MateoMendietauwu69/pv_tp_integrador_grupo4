@@ -1,18 +1,23 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import Router from './routes/Router'
-import './css/App.css'
+import { Outlet } from 'react-router-dom';
+import Header from './components/layout/Header.jsx';
+import Nav from './components/layout/Nav.jsx';
+import Footer from './components/layout/Footer.jsx';
+import { Box, Container } from '@mui/material';
+import './css/App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <Router />
-    </>
-  )
-}
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Header />
+      <Nav />
+      
+      <Container component="main" sx={{ flexGrow: 1, py: 4 }}>
+        <Outlet />
+      </Container>
+      
+      <Footer />
+    </Box>
+  );
+};
 
-export default App
+export default App;
