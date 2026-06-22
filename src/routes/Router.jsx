@@ -1,39 +1,43 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useContext } from 'react';
-import { AdminContext } from '../context/AdminContext.jsx';
+import { createBrowserRouter } from 'react-router-dom';
 import RutaProtegida from '../components/common/RutaProtegida.jsx';
 import Login from '../views/Login.jsx';
 import Dashboard from '../views/Dashboard.jsx';
 import DetalleCliente from '../views/DetalleCliente.jsx'
 import Clientes from '../views/ListaClientes.jsx';
 import Notfound from '../views/Notfound.jsx';
-import Header from '../components/layout/Header.jsx';
-import Nav from '../components/layout/Nav.jsx';
-import Footer from '../components/layout/Footer.jsx';
+import App from '../App.jsx';
 
-const Router = () => {
+const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <App />,
+        children: [
+            {
+                index: true,
+                element: <RutaProtegida><Dashboard /></RutaProtegida>
+            },
+            {
+                path: 'login',
+                element: <Login />
+            },
+            {
+                path: 'dashboard',
+                element: <RutaProtegida><Dashboard /></RutaProtegida>
+            },
+            {
+                path: 'clientes',
+                element: <RutaProtegida><Clientes /></RutaProtegida>
+            },
+            {
+                path: 'clientes/:id',
+                element: <RutaProtegida><DetalleCliente /></RutaProtegida>
+            },
+            {
+                path: '*',
+                element: <Notfound />
+            }
+        ]
+    }
+]);
 
-    const {admin} = useContext(AdminContext);
-
-    return (
-        <BrowserRouter>
-            {admin && (
-                <div className="topbar-cyber">
-                    <Nav />
-                    <Header />
-                </div>
-            )}
-            <Routes>
-                <Route path='/login' element={<Login />} />
-                <Route path='/' element={<RutaProtegida><Dashboard /></RutaProtegida>} />
-                <Route path='/dashboard' element={<RutaProtegida><Dashboard /></RutaProtegida>} />
-                <Route path='/clientes' element={<RutaProtegida><Clientes /></RutaProtegida>} />
-                <Route path='/clientes/:id' element={<RutaProtegida><DetalleCliente /></RutaProtegida>} />
-                <Route path='*' element={<Notfound />} />
-            </Routes>
-            {admin && <Footer />}
-        </BrowserRouter>
-    );
-}
-
-export default Router;
+export default router;
