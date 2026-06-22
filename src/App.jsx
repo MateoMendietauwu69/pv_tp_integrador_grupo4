@@ -1,22 +1,18 @@
-import { Outlet } from 'react-router-dom';
-import { useContext } from 'react';
-import { AdminContext } from './context/AdminContext.jsx';
-import Header from './components/layout/Header.jsx';
-import Nav from './components/layout/Nav.jsx';
-import Footer from './components/layout/Footer.jsx';
-import './css/App.css';
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from './assets/vite.svg'
+import heroImg from './assets/hero.png'
+import Router from './routes/Router'
+import './css/App.css'
 
-const App = () => {
-    const {admin} = useContext(AdminContext);
+function App() {
+  const [count, setCount] = useState(0)
 
-    return (
-        <>
-            {admin && <Header />}
-            {admin && <Nav />}
-            <Outlet />
-            {admin && <Footer />}
-        </>
-    );
-};
+  return (
+    <>
+      <Router />
+    </>
+  )
+}
 
-export default App;
+export default App

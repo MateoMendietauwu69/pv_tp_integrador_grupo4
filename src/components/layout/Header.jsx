@@ -15,9 +15,15 @@ const Header = () => {
 
     return(
         <header>
-            <p>{admin.nombre}</p>
-            <p>{admin.sector}</p>
-            <Button id="btncerrar" onClick={cerrarsesion} >Cerrar Sesión</Button>
+            <div className="header-info-cyber">
+                <span className="header-user">
+                    <span className="header-label">USUARIO:</span> {admin.nombre}
+                </span>
+                <span className={`header-badge ${admin.sector === 'Gerencia' ? 'badge-gerencia' : 'badge-soporte'}`}>
+                    {admin.sector}
+                </span>
+            </div>
+            <Button id="btncerrar" onClick={cerrarsesion}>Cerrar Sesión</Button>
         </header>
     );
 }
