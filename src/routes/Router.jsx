@@ -4,7 +4,7 @@ import { AdminContext } from '../context/AdminContext.jsx';
 import RutaProtegida from '../components/common/RutaProtegida.jsx';
 import Login from '../views/Login.jsx';
 import Dashboard from '../views/Dashboard.jsx';
-import Detalles from '../views/DetalleCliente.jsx'
+import DetalleCliente from '../views/DetalleCliente.jsx'
 import Clientes from '../views/ListaClientes.jsx';
 import Notfound from '../views/Notfound.jsx';
 import Header from '../components/layout/Header.jsx';
@@ -17,14 +17,18 @@ const Router = () => {
 
     return (
         <BrowserRouter>
-            {admin && <Header />}
-            {admin && <Nav />}
+            {admin && (
+                <div className="topbar-cyber">
+                    <Nav />
+                    <Header />
+                </div>
+            )}
             <Routes>
                 <Route path='/login' element={<Login />} />
                 <Route path='/' element={<RutaProtegida><Dashboard /></RutaProtegida>} />
                 <Route path='/dashboard' element={<RutaProtegida><Dashboard /></RutaProtegida>} />
                 <Route path='/clientes' element={<RutaProtegida><Clientes /></RutaProtegida>} />
-                <Route path='/clientes/:id' element={<RutaProtegida><Detalles /></RutaProtegida>} />
+                <Route path='/clientes/:id' element={<RutaProtegida><DetalleCliente /></RutaProtegida>} />
                 <Route path='*' element={<Notfound />} />
             </Routes>
             {admin && <Footer />}

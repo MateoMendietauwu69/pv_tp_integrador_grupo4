@@ -10,7 +10,7 @@ import {
   Alert
 } from "@mui/material";
 
-const FormularioCliente = () => {
+const FormularioCliente = ({ onAddCliente }) => {
 
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
@@ -21,6 +21,19 @@ const FormularioCliente = () => {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
+
+    if (nombre.length < 5 || nombre.length > 15) {
+        setMensaje("Error: El nombre debe tener entre 5 y 15 caracteres.");
+        setOpen(true);
+        return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        setMensaje("Error: El correo electrónico no es válido.");
+        setOpen(true);
+        return;
+    }
 
     try {
 
@@ -39,6 +52,13 @@ const FormularioCliente = () => {
       );
 
       const data = await response.json();
+
+      if (onAddCliente) {
+          onAddCliente({
+              email: email,
+              name: { firstname: nombre, lastname: "" }
+          });
+      }
 
       setMensaje(
         `Cliente creado correctamente. ID: ${data.id}`
@@ -105,7 +125,7 @@ const FormularioCliente = () => {
         autoHideDuration={4000}
         onClose={() => setOpen(false)}
       >
-        <Alert severity="success">
+        <Alert severity={mensaje.startsWith("Error") ? "error" : "success"}>
           {mensaje}
         </Alert>
       </Snackbar>

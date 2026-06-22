@@ -31,7 +31,11 @@ const Clientes = () => {
         <div id="formulario">
             <h1>Ahora estas en Clientes</h1>
             
-            <FormularioCliente />
+            <FormularioCliente onAddCliente={(nuevo) => {
+                const maxId = clientes.length > 0 ? Math.max(...clientes.map(c => Number(c.id))) : 0;
+                nuevo.id = maxId + 1;
+                setClientes([...clientes, nuevo]);
+            }} />
 
             <div className="tabla-clientes-container">
                 <h2 className="tabla-titulo">Clientes Registrados</h2>
