@@ -7,7 +7,7 @@ import {
     CircularProgress, Alert, Divider, Snackbar 
 } from '@mui/material';
 
-function DetalleCliente() {
+const DetalleCliente = () => {
     const { id } = useParams(); 
     const navigate = useNavigate();
     const { admin } = useContext(AdminContext); 
