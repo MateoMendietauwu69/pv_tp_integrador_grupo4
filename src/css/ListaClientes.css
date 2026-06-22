@@ -1,9 +1,107 @@
 @import url("https://fonts.googleapis.com/css2?family=Asimovian&family=Bangers&display=swap");
 
-h1{
-      font-family: 'Asimovian', sans-serif;
+h1 {
+    font-family: 'Asimovian', sans-serif;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-#formulario{
-    margin-top: 300px;
+#formulario {
+    margin-top: 40px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.tabla-clientes-container {
+    width: 100%;
+    max-width: 740px; 
+    background-color: #1a1523; 
+    border: 2px solid #ff007f; 
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.25);
+    box-sizing: border-box;
+}
+
+.tabla-titulo {
+    font-family: 'Asimovian', sans-serif;
+    color: #ff007f;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.tabla-cyber {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px; 
+    text-align: left;
+}
+
+.tabla-cyber th {
+    font-family: 'Asimovian', sans-serif;
+    color: #00e676; 
+    font-size: 0.85rem;
+    padding: 10px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(0, 230, 118, 0.3);
+}
+
+.tabla-cyber tr {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.tabla-cyber td {
+    padding: 12px 10px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nombre-cliente {
+    text-transform: capitalize;
+    font-weight: 500;
+}
+
+.boton-cyber-ficha {
+    background: #ff007f; 
+    color: #ffffff;
+    font-family: 'Asimovian', sans-serif;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px rgba(255, 0, 127, 0.4);
+}
+
+.boton-cyber-ficha:hover {
+    background: #00e676; 
+    color: #121212;
+    box-shadow: 0 0 12px #00e676;
+    transform: scale(1.05);
+}
+
+.tabla-cargando {
+    text-align: center;
+    color: #00e676;
+    font-family: 'Asimovian', sans-serif;
+}
+
+.tabla-error {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff3333;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ff3333;
+    text-align: center;
 }

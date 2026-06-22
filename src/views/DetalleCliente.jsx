@@ -1,9 +1,147 @@
-import '../css/DetalleCliente.css'
+import { useState, useEffect, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { AdminContext } from '../context/AdminContext.jsx'; 
+import '../css/DetalleCliente.css';
+import { 
+    Container, Paper, Typography, Box, Grid, Button, 
+    CircularProgress, Alert, Divider, Snackbar 
+} from '@mui/material';
 
-const Detalles = () => {
+function DetalleCliente() {
+    const { id } = useParams(); 
+    const navigate = useNavigate();
+    const { admin } = useContext(AdminContext); 
+
+    const [cliente, setCliente] = useState(null);
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState(null);
+    const [eliminando, setEliminando] = useState(false);
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+
+    useEffect(() => {
+        const fetchClienteInfo = async () => {
+            try {
+                setCargando(true);
+                setError(null);
+
+                if (Number(id) > 10) {
+                    setCliente({
+                        id: id,
+                        email: "cliente_nuevo@correo.com",
+                        username: "usuario_" + id,
+                        password: "password123",
+                        name: { firstname: "Cliente", lastname: "Simulado " + id },
+                        address: { street: "Av. Fascio", number: 400, zipcode: "4600", city: "San Salvador de Jujuy" },
+                        phone: "388-123456"
+                    });
+                    setCargando(false);
+                    return;
+                }
+
+                const response = await fetch(`https://fakestoreapi.com/users/${id}`);
+                if (!response.ok) throw new Error('No se pudo conectar con el servidor.');
+                
+                const data = await response.json();
+                if (!data) throw new Error('El cliente solicitado no existe.');
+                setCliente(data);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setCargando(false);
+            }
+        };
+
+        if (id) fetchClienteInfo();
+    }, [id]);
+
+    const handleEliminarCliente = async () => {
+        if (!window.confirm('Seguro que quiere eliminar al cliente?')) return;
+        
+        try {
+            setEliminando(true);
+            const response = await fetch(`https://fakestoreapi.com/users/${id}`, {
+                method: 'DELETE'
+            });
+
+            if (!response.ok) throw new Error('Error');
+            
+            setOpenSnackbar(true);
+            setTimeout(() => {
+                navigate('/clientes');
+            }, 2000);
+        } catch (err) {
+            alert(err.message);
+        } finally {
+            setEliminando(false);
+        }
+    };
+
+    if (cargando) return <Box display="flex" justifyContent="center" mt={5}><CircularProgress color="secondary" /></Box>;
+    if (error) return <Container sx={{ mt: 4 }}><Alert severity="error">{error}</Alert></Container>;
+
     return (
-        <h1 id='detalles'>Aquí estan los perfiles de usuario</h1>
+        <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+            <Button onClick={() => navigate('/clientes')} sx={{ color: '#b388ff', mb: 2, textTransform: 'none' }}>
+                ← Volver a Clientes
+            </Button>
+
+            <Paper elevation={3} sx={{ p: 4, backgroundColor: 'rgba(25, 25, 40, 0.95)', color: 'white', borderRadius: 2 }}>
+                <Box display="flex" justifyContent="space-between" alignItems="center" mb={3} flexWrap="wrap" gap={2}>
+                    <Box>
+                        <Typography variant="h4" sx={{ textTransform: 'capitalize' }}>
+                            {cliente?.name?.firstname} {cliente?.name?.lastname}
+                        </Typography>
+                        <Typography variant="subtitle2" color="#b388ff">ID Registro: #{id}</Typography>
+                    </Box>
+
+                    {admin?.sector === 'Gerencia' ? (
+                        <Button 
+                            variant="contained" 
+                            color="error" 
+                            disabled={eliminando} 
+                            onClick={handleEliminarCliente}
+                            sx={{ textTransform: 'none', fontWeight: 'bold' }}
+                        >
+                            {eliminando ? 'Eliminando' : 'Eliminar Cliente'}
+                        </Button>
+                    ) : (
+                        <Typography variant="caption" sx={{ p: 1, bgcolor: 'rgba(255,255,255,0.05)', borderRadius: 1 }}>
+                            Sector: {admin?.sector} (Solo Lectura)
+                        </Typography>
+                    )}
+                </Box>
+
+                <Divider sx={{ bgcolor: 'rgba(255,255,255,0.1)', mb: 3 }} />
+
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={6}>
+                        <Typography variant="h6" color="#b388ff">Contacto</Typography>
+                        <Typography><strong>Email:</strong> {cliente?.email}</Typography>
+                        <Typography><strong>Teléfono:</strong> {cliente?.phone}</Typography>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6}>
+                        <Typography variant="h6" color="#b388ff">Dirección Completa</Typography>
+                        <Typography><strong>Calle:</strong> {cliente?.address?.street} N° {cliente?.address?.number}</Typography>
+                        <Typography><strong>Ciudad:</strong> {cliente?.address?.city}</Typography>
+                        <Typography><strong>C.P.:</strong> {cliente?.address?.zipcode}</Typography>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <Box sx={{ p: 2, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: 2, border: '1px dashed rgba(255,255,255,0.1)' }}>
+                            <Typography variant="subtitle1" color="#00e676">Credenciales de Acceso (BD)</Typography>
+                            <Typography><strong>Username:</strong> {cliente?.username}</Typography>
+                            <Typography><strong>Password:</strong> {cliente?.password}</Typography>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Paper>
+
+            <Snackbar open={openSnackbar} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+                <Alert severity="warning" variant="filled">Petición DELETE procesada. Redirigiendo...</Alert>
+            </Snackbar>
+        </Container>
     );
 }
 
-export default Detalles;
+export default DetalleCliente;
