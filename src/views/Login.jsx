@@ -1,14 +1,14 @@
 import { MenuItem, TextField, Button, Typography } from "@mui/material"
 import { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom";
-import { AdminContext } from "../context/AdminContext";
+import useAdmin from '../hooks/useAdmin.js'
 import '../css/Login.css'
 const Login = () => {
 
     const [nombre, setnombre] = useState("");
     const [sector, setsector] = useState("");
 
-    const {login} = useContext(AdminContext);
+    const {login} = useAdmin();
 
     const navigate = useNavigate();
 

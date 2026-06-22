@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { AdminContext } from '../context/AdminContext.jsx'; 
+import useAdmin from '../hooks/useAdmin.js'; 
 import '../css/DetalleCliente.css';
 import { 
     Container, Paper, Typography, Box, Grid, Button, 
@@ -10,7 +10,7 @@ import {
 const DetalleCliente = () => {
     const { id } = useParams(); 
     const navigate = useNavigate();
-    const { admin } = useContext(AdminContext); 
+    const { admin } = useAdmin(); 
 
     const [cliente, setCliente] = useState(null);
     const [cargando, setCargando] = useState(true);

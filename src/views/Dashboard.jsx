@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AdminContext } from '../context/AdminContext.jsx';
+import useAdmin from '../hooks/useAdmin.js';
 import '../css/Dashboard.css'
 
 const Dashboard = () => {
-    const { admin } = useContext(AdminContext);
+    const { admin } = useAdmin();
     const navigate = useNavigate();
 
     return (
