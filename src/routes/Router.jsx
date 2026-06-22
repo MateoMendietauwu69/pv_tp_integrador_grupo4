@@ -24,7 +24,7 @@ const Router = () => {
                 <Route path='/' element={<RutaProtegida><Dashboard /></RutaProtegida>} />
                 <Route path='/dashboard' element={<RutaProtegida><Dashboard /></RutaProtegida>} />
                 <Route path='/clientes' element={<RutaProtegida><Clientes /></RutaProtegida>} />
-                <Route path='/detalles' element={<RutaProtegida><Detalles /></RutaProtegida>} />
+                <Route path='/clientes/:id' element={<RutaProtegida><Detalles /></RutaProtegida>} />
                 <Route path='*' element={<Notfound />} />
             </Routes>
             {admin && <Footer />}
