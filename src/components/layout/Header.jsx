@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import { AdminContext } from "../../context/AdminContext";
+import useAdmin from '../../hooks/useAdmin.js'
 import '../../css/Header.css'
 
 const Header = () => {
 
-    const {admin, logout} = useContext(AdminContext);
+    const {admin, logout} = useAdmin();
     const navigate =useNavigate();
     const cerrarsesion = () => {
         logout();

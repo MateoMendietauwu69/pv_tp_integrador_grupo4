@@ -1,13 +1,13 @@
 import { useContext } from 'react'
 import { Outlet } from 'react-router-dom'
-import { AdminContext } from './context/AdminContext.jsx'
+import useAdmin from './hooks/useAdmin.js'
 import Header from './components/layout/Header.jsx'
 import Nav from './components/layout/Nav.jsx'
 import Footer from './components/layout/Footer.jsx'
 import './css/App.css'
 
 const App = () => {
-  const { admin } = useContext(AdminContext);
+  const { admin } = useAdmin();
 
   return (
     <>
