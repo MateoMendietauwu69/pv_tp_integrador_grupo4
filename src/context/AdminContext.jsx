@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import { autorizacionesService } from '../services/autorizacionesService';
 
 export const AdminContext = createContext(null);
 
@@ -17,8 +18,12 @@ export const AdminProvider = ({ children }) => {
     }
   }, [admin]);
 
-  const login = (nombre, sector) => {
-    setAdmin({ nombre, sector });
+  const login = async (nombre, password, sector) => {
+    const res = await autorizacionesService.login(nombre, password, sector);
+    if (res.exito) {
+      setAdmin(res.datos);
+    }
+    return res;
   };
 
   const logout = () => {

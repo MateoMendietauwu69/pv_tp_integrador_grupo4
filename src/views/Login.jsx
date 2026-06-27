@@ -6,17 +6,29 @@ import '../css/Login.css'
 const Login = () => {
 
     const [nombre, setnombre] = useState("");
-    const [sector, setsector] = useState("");
+    const [password, setpassword] = useState("");
+    const [sector, setsector] = useState("Seleccionar");
+    const [error, setError] = useState("");
 
     const {login} = useAdmin();
 
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!nombre || !sector) return;
-        login(nombre, sector);
-        navigate("/dashboard");
+        setError("");
+        
+        if(!nombre || !password || !sector || sector === "Seleccionar") {
+            setError("Debe completar todos los campos y seleccionar un sector válido");
+            return;
+        }
+
+        const res = await login(nombre, password, sector);
+        if (res.exito) {
+            navigate("/dashboard");
+        } else {
+            setError(res.mensaje);
+        }
     };
 
     return (
@@ -26,22 +38,37 @@ const Login = () => {
                     <Typography variant="h4" id="titulologin">
                         Login
                     </Typography>
+                    
+                    {error && (
+                        <Typography color="error" sx={{ mb: 2, fontFamily: 'Asimovian, sans-serif' }}>
+                            {error}
+                        </Typography>
+                    )}
+
                     <TextField 
-                        className="campologin"
+                        className="login-cyber-input"
                         label="Nombre"
                         value={nombre}
                         onChange={(e) => setnombre(e.target.value)}
                         fullWidth
                     />
                     <TextField 
-                        className="campologin"
+                        className="login-cyber-input"
+                        label="Password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setpassword(e.target.value)}
+                        fullWidth
+                    />
+                    <TextField 
+                        className="login-cyber-input"
                         select
                         label="Sector"
                         value={sector}
                         onChange={(e) => setsector(e.target.value)}
                         fullWidth
-                        sx={{mt:2}}
                     >
+                        <MenuItem value="Seleccionar" disabled>Seleccionar</MenuItem>
                         <MenuItem value="Soporte">Soporte</MenuItem>
                         <MenuItem value="Gerencia">Gerencia</MenuItem>
                     </TextField>
