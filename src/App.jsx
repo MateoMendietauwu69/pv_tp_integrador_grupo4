@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { Outlet } from 'react-router-dom'
 import useAdmin from './hooks/useAdmin.js'
 import Header from './components/layout/Header.jsx'

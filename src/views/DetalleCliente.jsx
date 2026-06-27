@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import useAdmin from '../hooks/useAdmin.js'; 
 import '../css/DetalleCliente.css';
