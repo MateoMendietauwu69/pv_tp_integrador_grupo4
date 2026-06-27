@@ -1,57 +1,82 @@
 import axios from "axios";
 
 const URL = "https://fakestoreapi.com/users";
+const LS_KEY = "clientes";
+
+const getLS = () => {
+    const data = localStorage.getItem(LS_KEY);
+    return data ? JSON.parse(data) : [];
+};
+
+const saveLS = (data) => {
+    localStorage.setItem(LS_KEY, JSON.stringify(data));
+};
 
 export const getClientes = async () => {
-    const { data } = await axios.get(URL);
+    const guardados = getLS();
 
-    const guardados = JSON.parse(localStorage.getItem("clientes"));
-
-    if (guardados) {
-        return guardados;
+    // si hay datos locales, usalos como cache
+    if (guardados.length > 0) {
+        return guardados.filter(c => c.visible !== false);
     }
+
+    const { data } = await axios.get(URL);
 
     const clientes = data.map(c => ({
         ...c,
         visible: true
     }));
 
-    localStorage.setItem("clientes", JSON.stringify(clientes));
+    saveLS(clientes);
 
     return clientes;
 };
 
 export const agregarCliente = async (cliente) => {
+    const clientes = getLS();
 
-    const clientes = JSON.parse(localStorage.getItem("clientes")) || [];
+    const nuevo = {
+        ...cliente,
+        id: getSmallestAvailableId(clientes),
+        visible: true
+    };
 
-    cliente.id = getSmallestAvailableId(clientes);
+    clientes.push(nuevo);
+    saveLS(clientes);
 
-    cliente.visible = true;
+    return nuevo;
+};
 
-    clientes.push(cliente);
+export const eliminarCliente = async (id) => {
+    const clientes = getLS();
 
-    localStorage.setItem("clientes", JSON.stringify(clientes));
+    const actualizados = clientes.map(c =>
+        Number(c.id) === Number(id)
+            ? { ...c, visible: false }
+            : c
+    );
 
-    return cliente;
+    saveLS(actualizados);
+
+    return true;
+};
+
+export const getClientePorId = async (id) => {
+    const clientes = getLS();
+    return clientes.find(c => Number(c.id) === Number(id));
 };
 
 export const getSmallestAvailableId = (clientes) => {
+    const ids = clientes
+        .map(c => Number(c.id))
+        .filter(n => !isNaN(n))
+        .sort((a, b) => a - b);
 
     let id = 1;
 
-    const ids = clientes
-        .map(c => Number(c.id))
-        .sort((a,b)=>a-b);
-
-    for(const actual of ids){
-
-        if(actual === id){
-            id++;
-        }else{
-            break;
-        }
-
+    for (const actual of ids) {
+        if (actual === id) id++;
+        else if (actual > id) break;
     }
 
     return id;
