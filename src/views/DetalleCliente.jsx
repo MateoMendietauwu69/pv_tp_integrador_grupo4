@@ -6,6 +6,7 @@ import {
     Container, Paper, Typography, Box, Grid, Button, 
     CircularProgress, Alert, Divider, Snackbar 
 } from '@mui/material';
+import { eliminarCliente , getClientePorId  } from "../services/clienteService";
 
 const DetalleCliente = () => {
     const { id } = useParams(); 
@@ -19,62 +20,69 @@ const DetalleCliente = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     useEffect(() => {
-        const fetchClienteInfo = async () => {
-            try {
-                setCargando(true);
-                setError(null);
 
-                if (Number(id) > 10) {
-                    setCliente({
-                        id: id,
-                        email: "cliente_nuevo@correo.com",
-                        username: "usuario_" + id,
-                        password: "password123",
-                        name: { firstname: "Cliente", lastname: "Simulado " + id },
-                        address: { street: "Av. Fascio", number: 400, zipcode: "4600", city: "San Salvador de Jujuy" },
-                        phone: "388-123456"
-                    });
-                    setCargando(false);
-                    return;
-                }
+    const cargarCliente = async () => {
 
-                const response = await fetch(`https://fakestoreapi.com/users/${id}`);
-                if (!response.ok) throw new Error('No se pudo conectar con el servidor.');
-                
-                const data = await response.json();
-                if (!data) throw new Error('El cliente solicitado no existe.');
-                setCliente(data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setCargando(false);
+        try {
+
+            setCargando(true);
+            setError(null);
+
+            const data = await getClientePorId(id);
+
+            if (!data) {
+                throw new Error("El cliente solicitado no existe.");
             }
-        };
 
-        if (id) fetchClienteInfo();
-    }, [id]);
+            setCliente(data);
+
+        } catch (err) {
+
+            setError(err.message);
+
+        } finally {
+
+            setCargando(false);
+
+        }
+
+    };
+
+    if (id) {
+        cargarCliente();
+    }
+
+}, [id]);
 
     const handleEliminarCliente = async () => {
-        if (!window.confirm('Seguro que quiere eliminar al cliente?')) return;
-        
-        try {
-            setEliminando(true);
-            const response = await fetch(`https://fakestoreapi.com/users/${id}`, {
-                method: 'DELETE'
-            });
 
-            if (!response.ok) throw new Error('Error');
-            
-            setOpenSnackbar(true);
-            setTimeout(() => {
-                navigate('/clientes');
-            }, 2000);
-        } catch (err) {
-            alert(err.message);
-        } finally {
-            setEliminando(false);
-        }
-    };
+    if (!window.confirm("¿Seguro que quiere eliminar al cliente?")) return;
+
+    try {
+
+        setEliminando(true);
+
+        await eliminarCliente(id);
+
+        setOpenSnackbar(true);
+
+        setTimeout(() => {
+
+            navigate("/clientes");
+
+        }, 1500);
+
+    } catch (err) {
+
+        alert(err.message);
+
+    } finally {
+
+        setEliminando(false);
+
+    }
+
+};
 
     if (cargando) return <Box display="flex" justifyContent="center" mt={5}><CircularProgress color="secondary" /></Box>;
     if (error) return <Container sx={{ mt: 4 }}><Alert severity="error">{error}</Alert></Container>;
