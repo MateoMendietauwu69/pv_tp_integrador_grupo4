@@ -59,7 +59,7 @@
     background: rgba(179, 136, 255, 0.1);
 }
 
-/* Cards */
+
 .dash-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

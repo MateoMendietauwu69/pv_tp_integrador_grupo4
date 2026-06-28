@@ -15,7 +15,7 @@ const saveLS = (data) => {
 export const getClientes = async () => {
     const guardados = getLS();
 
-    // si hay datos locales, usalos como cache
+
     if (guardados.length > 0) {
         return guardados.filter(c => c.visible !== false);
     }
@@ -35,7 +35,7 @@ export const getClientes = async () => {
 export const agregarCliente = async (cliente) => {
     const clientes = getLS();
 
-    // Petición POST a la API (requerido por la rúbrica)
+
     try {
         const { data } = await axios.post(URL, cliente);
         console.log("POST /users - Respuesta API:", data);
@@ -56,7 +56,7 @@ export const agregarCliente = async (cliente) => {
 };
 
 export const eliminarCliente = async (id) => {
-    // Petición DELETE a la API (requerido por la rúbrica)
+
     try {
         const { data } = await axios.delete(`${URL}/${id}`);
         console.log("DELETE /users/" + id + " - Respuesta API:", data);
@@ -78,7 +78,7 @@ export const eliminarCliente = async (id) => {
 };
 
 export const getClientePorId = async (id) => {
-    // Petición GET individual a la API (requerido por la rúbrica)
+
     try {
         const { data } = await axios.get(`${URL}/${id}`);
         console.log("GET /users/" + id + " - Respuesta API:", data);
@@ -86,7 +86,7 @@ export const getClientePorId = async (id) => {
         console.warn("GET individual a la API falló, se usa LocalStorage:", err.message);
     }
 
-    // Siempre devuelve desde LocalStorage para mantener consistencia
+
     const clientes = getLS();
     return clientes.find(c => Number(c.id) === Number(id));
 };

@@ -77,7 +77,7 @@
   transform: scale(1.05);
 }
 
-/* ========== TOGGLE MODO AVANZADO ========== */
+
 .toggle-avanzado-container {
   display: flex;
   justify-content: center;
@@ -110,7 +110,7 @@
   color: #fa0577;
 }
 
-/* ========== CAMPOS AVANZADOS ========== */
+
 .campos-avanzados {
   animation: slideDown 0.35s ease-out;
   overflow: hidden;

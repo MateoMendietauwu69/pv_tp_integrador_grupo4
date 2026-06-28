@@ -47,28 +47,28 @@ const FormularioCliente = ({ onAddCliente }) => {
     const lastname = form.lastname.trim();
     const email = form.email.trim();
 
-    // 🔴 VALIDACIÓN VACÍOS (campos básicos)
+
     if (!name || !lastname || !email) {
       setMensaje("Error: Nombre, Apellido y Email son obligatorios");
       setOpen(true);
       return;
     }
 
-    // 🔴 VALIDACIÓN NOMBRE
+
     if (!soloLetras.test(name)) {
       setMensaje("Error: El nombre solo puede contener letras");
       setOpen(true);
       return;
     }
 
-    // 🔴 VALIDACIÓN APELLIDO
+
     if (!soloLetras.test(lastname)) {
       setMensaje("Error: El apellido solo puede contener letras");
       setOpen(true);
       return;
     }
 
-    // 🔴 VALIDACIÓN EMAIL
+
     if (!emailRegex.test(email)) {
       setMensaje("Error: Email inválido");
       setOpen(true);
@@ -85,7 +85,7 @@ const FormularioCliente = ({ onAddCliente }) => {
         email: email
       };
 
-      // Campos avanzados solo si el modo está activado
+
       if (modoAvanzado) {
         nuevoCliente.phone = form.phone.trim() || undefined;
         nuevoCliente.username = form.username.trim() || undefined;
@@ -162,7 +162,7 @@ const FormularioCliente = ({ onAddCliente }) => {
             margin="normal"
           />
 
-          {/* Toggle modo avanzado */}
+
           <div className="toggle-avanzado-container">
             <button
               type="button"
@@ -173,7 +173,7 @@ const FormularioCliente = ({ onAddCliente }) => {
             </button>
           </div>
 
-          {/* Campos avanzados */}
+
           {modoAvanzado && (
             <div className={`campos-avanzados ${modoAvanzado ? "visible" : ""}`}>
 
