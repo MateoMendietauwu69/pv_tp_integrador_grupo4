@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import FormularioCliente from "../components/common/FormularioCliente";
 import '../css/ListaClientes.css';
 import { getClientes, agregarCliente } from "../services/clienteService";
+import {
+    Table, TableHead, TableBody, TableRow, TableCell,
+    CircularProgress, Alert
+} from '@mui/material';
 
 const Clientes = () => {
     const navigate = useNavigate();
@@ -79,6 +83,7 @@ const Clientes = () => {
         <option value="nombre">Nombre</option>
         <option value="apellido">Apellido</option>
         <option value="email">Email</option>
+        <option value="ciudad">Ciudad</option>
         <option value="id">ID</option>
     </select>
 
@@ -90,20 +95,22 @@ const Clientes = () => {
                 <h2 className="tabla-titulo">Clientes Registrados</h2>
                 
                 {cargando ? (
-                    <p className="tabla-cargando">Cargando listado</p>
+                    <div style={{ display: 'flex', justifyContent: 'center', padding: '30px' }}>
+                        <CircularProgress sx={{ color: '#00e676' }} />
+                    </div>
                 ) : error ? (
-                    <div className="tabla-error">{error}</div>
+                    <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>
                 ) : (
-                    <table className="tabla-cyber">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th style={{ textAlign: 'center' }}>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <Table className="tabla-cyber">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>ID</TableCell>
+                                <TableCell>Nombre</TableCell>
+                                <TableCell>Email</TableCell>
+                                <TableCell style={{ textAlign: 'center' }}>Acciones</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
                             {clientes
                             .filter(cliente => {
                             const texto = busqueda.toLowerCase();
@@ -125,6 +132,11 @@ const Clientes = () => {
                                         ?.toLowerCase()
                                         .includes(texto);
 
+                                case "ciudad":
+                                    return cliente.address?.city
+                                        ?.toLowerCase()
+                                        .includes(texto);
+
                                 case "id":
                                     return cliente.id
                                         .toString()
@@ -135,6 +147,7 @@ const Clientes = () => {
                                         cliente.name.firstname?.toLowerCase().includes(texto) ||
                                         cliente.name.lastname?.toLowerCase().includes(texto) ||
                                         cliente.email?.toLowerCase().includes(texto) ||
+                                        cliente.address?.city?.toLowerCase().includes(texto) ||
                                         cliente.id.toString().includes(texto)
                                     );
                             }
@@ -142,24 +155,24 @@ const Clientes = () => {
                         })
                             .sort((a,b)=>a.id-b.id)
                             .map((cliente) => (
-                                <tr key={cliente.id}>
-                                    <td>#{cliente.id}</td>
-                                    <td className="nombre-cliente">
+                                <TableRow key={cliente.id}>
+                                    <TableCell>#{cliente.id}</TableCell>
+                                    <TableCell className="nombre-cliente">
                                         {cliente.name?.firstname} {cliente.name?.lastname}
-                                    </td>
-                                    <td>{cliente.email}</td>
-                                    <td style={{ textAlign: 'center' }}>
+                                    </TableCell>
+                                    <TableCell>{cliente.email}</TableCell>
+                                    <TableCell style={{ textAlign: 'center' }}>
                                         <button 
                                             onClick={() => navigate(`/clientes/${cliente.id}`)} 
                                             className="boton-cyber-ficha"
                                         >
                                             Ver Ficha →
                                         </button>
-                                    </td>
-                                </tr>
+                                    </TableCell>
+                                </TableRow>
                             ))}
-                        </tbody>
-                    </table>
+                        </TableBody>
+                    </Table>
                 )}
             </div>
         </div>
