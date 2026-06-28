@@ -12,10 +12,19 @@ import {
 
 const FormularioCliente = ({ onAddCliente }) => {
 
+  const [modoAvanzado, setModoAvanzado] = useState(false);
+
   const [form, setForm] = useState({
     name: "",
     lastname: "",
-    email: ""
+    email: "",
+    phone: "",
+    username: "",
+    password: "",
+    street: "",
+    number: "",
+    city: "",
+    zipcode: ""
   });
 
   const [mensaje, setMensaje] = useState("");
@@ -38,9 +47,9 @@ const FormularioCliente = ({ onAddCliente }) => {
     const lastname = form.lastname.trim();
     const email = form.email.trim();
 
-    // 🔴 VALIDACIÓN VACÍOS
+    // 🔴 VALIDACIÓN VACÍOS (campos básicos)
     if (!name || !lastname || !email) {
-      setMensaje("Error: Todos los campos son obligatorios");
+      setMensaje("Error: Nombre, Apellido y Email son obligatorios");
       setOpen(true);
       return;
     }
@@ -76,6 +85,19 @@ const FormularioCliente = ({ onAddCliente }) => {
         email: email
       };
 
+      // Campos avanzados solo si el modo está activado
+      if (modoAvanzado) {
+        nuevoCliente.phone = form.phone.trim() || undefined;
+        nuevoCliente.username = form.username.trim() || undefined;
+        nuevoCliente.password = form.password.trim() || undefined;
+        nuevoCliente.address = {
+          street: form.street.trim() || undefined,
+          number: form.number.trim() ? Number(form.number.trim()) : undefined,
+          city: form.city.trim() || undefined,
+          zipcode: form.zipcode.trim() || undefined
+        };
+      }
+
       if (onAddCliente) {
         onAddCliente(nuevoCliente);
       }
@@ -86,7 +108,14 @@ const FormularioCliente = ({ onAddCliente }) => {
       setForm({
         name: "",
         lastname: "",
-        email: ""
+        email: "",
+        phone: "",
+        username: "",
+        password: "",
+        street: "",
+        number: "",
+        city: "",
+        zipcode: ""
       });
 
     } catch (error) {
@@ -132,6 +161,102 @@ const FormularioCliente = ({ onAddCliente }) => {
             fullWidth
             margin="normal"
           />
+
+          {/* Toggle modo avanzado */}
+          <div className="toggle-avanzado-container">
+            <button
+              type="button"
+              className={`toggle-avanzado-btn ${modoAvanzado ? "activo" : ""}`}
+              onClick={() => setModoAvanzado(!modoAvanzado)}
+            >
+              {modoAvanzado ? "▲ Ocultar campos avanzados" : "▼ Modo Avanzado"}
+            </button>
+          </div>
+
+          {/* Campos avanzados */}
+          {modoAvanzado && (
+            <div className={`campos-avanzados ${modoAvanzado ? "visible" : ""}`}>
+
+              <Typography variant="subtitle2" className="seccion-titulo">
+                Contacto
+              </Typography>
+
+              <TextField
+                label="Teléfono"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+
+              <Typography variant="subtitle2" className="seccion-titulo">
+                Dirección
+              </Typography>
+
+              <div className="campos-fila">
+                <TextField
+                  label="Calle"
+                  name="street"
+                  value={form.street}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Número"
+                  name="number"
+                  value={form.number}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                />
+              </div>
+
+              <div className="campos-fila">
+                <TextField
+                  label="Ciudad"
+                  name="city"
+                  value={form.city}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Código Postal"
+                  name="zipcode"
+                  value={form.zipcode}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                />
+              </div>
+
+              <Typography variant="subtitle2" className="seccion-titulo">
+                Credenciales
+              </Typography>
+
+              <div className="campos-fila">
+                <TextField
+                  label="Username"
+                  name="username"
+                  value={form.username}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                />
+                <TextField
+                  label="Password"
+                  name="password"
+                  type="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  fullWidth
+                  margin="normal"
+                />
+              </div>
+            </div>
+          )}
 
           <Button variant="contained" type="submit">
             Agregar Cliente
